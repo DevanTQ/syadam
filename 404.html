@@ -185,17 +185,14 @@
             display: flex;
             gap: clamp(10px, 2vw, 20px);
             margin-top: clamp(20px, 4vw, 35px);
-            justify-items: center;
-            align-items: center;
-            margin-right: 50px;
+            justify-content: center;
             flex-wrap: wrap;
-            width: 50%;
+            width: 100%;
         }
 
         .status-item {
             display: flex;
-            align-content: center;
-            justify-content: center;
+            align-items: center;
             gap: clamp(6px, 1.5vw, 10px);
             padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 20px);
             background: rgba(0, 0, 0, 0.4);
@@ -556,151 +553,243 @@
             });
         }
 
-        // Get real system information
-        function getSystemInfo() {
+        // Debug mode for GitHub Pages
+        const DEBUG = true;
+        
+        // Console log for debugging
+        function debugLog(message, data = null) {
+            if (DEBUG) {
+                console.log(`[404 Debug] ${message}`, data || '');
+            }
+        }
+
+        // Fallback system info for GitHub Pages compatibility
+        function createFallbackSystemInfo() {
+            debugLog('Creating fallback system info');
             const systemInfo = document.getElementById('systemInfo');
-            const now = new Date();
-            const loadTime = performance.now();
             
-            // Get real browser and system data
-            const browserInfo = {
-                userAgent: navigator.userAgent,
-                platform: navigator.platform,
-                language: navigator.language,
-                cookieEnabled: navigator.cookieEnabled,
-                onLine: navigator.onLine,
-                hardwareConcurrency: navigator.hardwareConcurrency || 'Unknown',
-                maxTouchPoints: navigator.maxTouchPoints || 0,
-                deviceMemory: navigator.deviceMemory || 'Unknown'
-            };
-
-            // Get screen information
-            const screenInfo = {
-                width: screen.width,
-                height: screen.height,
-                availWidth: screen.availWidth,
-                availHeight: screen.availHeight,
-                colorDepth: screen.colorDepth,
-                pixelDepth: screen.pixelDepth
-            };
-
-            // Get window information
-            const windowInfo = {
-                innerWidth: window.innerWidth,
-                innerHeight: window.innerHeight,
-                devicePixelRatio: window.devicePixelRatio || 1
-            };
-
-            // Get connection information (if available)
-            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-            
-            // Get geolocation info (just timezone)
-            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-            // Detect browser
-            function getBrowser() {
-                const ua = navigator.userAgent;
-                if (ua.includes('Firefox')) return 'Firefox';
-                if (ua.includes('Chrome') && !ua.includes('Edge')) return 'Chrome';
-                if (ua.includes('Safari') && !ua.includes('Chrome')) return 'Safari';
-                if (ua.includes('Edge')) return 'Edge';
-                if (ua.includes('Opera') || ua.includes('OPR')) return 'Opera';
-                return 'Unknown';
+            if (!systemInfo) {
+                debugLog('ERROR: systemInfo element not found');
+                return;
             }
 
-            // Detect OS
-            function getOS() {
-                const ua = navigator.userAgent;
-                if (ua.includes('Windows')) return 'Windows';
-                if (ua.includes('Mac')) return 'macOS';
-                if (ua.includes('Linux')) return 'Linux';
-                if (ua.includes('Android')) return 'Android';
-                if (ua.includes('iOS') || ua.includes('iPhone') || ua.includes('iPad')) return 'iOS';
-                return 'Unknown';
-            }
-
-            // Create info rows with real data
-            const infoData = [
+            const fallbackData = [
                 { label: 'Status Code', value: 'HTTP 404' },
                 { label: 'Request Method', value: 'GET' },
-                { label: 'Current Time', value: now.toLocaleString() },
-                { label: 'Page Load Time', value: `${loadTime.toFixed(2)}ms` },
-                { label: 'Browser', value: getBrowser() },
-                { label: 'Operating System', value: getOS() },
-                { label: 'Language', value: browserInfo.language },
-                { label: 'Timezone', value: timezone },
-                { label: 'Screen Resolution', value: `${screenInfo.width}x${screenInfo.height}` },
-                { label: 'Viewport Size', value: `${windowInfo.innerWidth}x${windowInfo.innerHeight}` },
-                { label: 'Pixel Ratio', value: windowInfo.devicePixelRatio },
-                { label: 'Color Depth', value: `${screenInfo.colorDepth}-bit` },
-                { label: 'CPU Cores', value: browserInfo.hardwareConcurrency },
-                { label: 'Device Memory', value: browserInfo.deviceMemory !== 'Unknown' ? `${browserInfo.deviceMemory}GB` : 'Unknown' },
-                { label: 'Touch Support', value: browserInfo.maxTouchPoints > 0 ? 'Yes' : 'No' },
-                { label: 'Cookies Enabled', value: browserInfo.cookieEnabled ? 'Yes' : 'No' },
-                { label: 'Online Status', value: browserInfo.onLine ? 'Online' : 'Offline' }
+                { label: 'Content-Type', value: 'text/html' },
+                { label: 'Server', value: 'GitHub Pages' },
+                { label: 'Cache-Control', value: 'public, max-age=0' },
+                { label: 'Load Time', value: 'N/A' }
             ];
 
-            // Add connection info if available
-            if (connection) {
-                infoData.push(
-                    { label: 'Connection Type', value: connection.effectiveType || 'Unknown' },
-                    { label: 'Downlink Speed', value: connection.downlink ? `${connection.downlink} Mbps` : 'Unknown' }
-                );
-            }
-
-            // Add performance info
-            if (performance.memory) {
-                infoData.push(
-                    { label: 'JS Heap Used', value: `${(performance.memory.usedJSHeapSize / 1048576).toFixed(2)}MB` },
-                    { label: 'JS Heap Total', value: `${(performance.memory.totalJSHeapSize / 1048576).toFixed(2)}MB` }
-                );
-            }
-
-            // Generate HTML
-            systemInfo.innerHTML = infoData.map(item => `
+            systemInfo.innerHTML = fallbackData.map(item => `
                 <div class="info-row">
                     <span class="info-label">${item.label}:</span>
                     <span class="info-value">${item.value}</span>
                 </div>
             `).join('');
-
-            // Update every 5 seconds for dynamic data
-            setTimeout(() => {
-                updateDynamicInfo();
-            }, 5000);
         }
 
-        // Update dynamic information
-        function updateDynamicInfo() {
-            const now = new Date();
-            const timeRow = document.querySelector('.info-row:nth-child(3) .info-value');
-            const onlineRow = document.querySelector('.info-row:nth-last-child(1) .info-value');
+        // Get real system information with error handling
+        function getSystemInfo() {
+            debugLog('Starting getSystemInfo function');
             
-            if (timeRow) {
-                timeRow.textContent = now.toLocaleString();
-            }
-            
-            if (onlineRow) {
-                onlineRow.textContent = navigator.onLine ? 'Online' : 'Offline';
+            const systemInfo = document.getElementById('systemInfo');
+            if (!systemInfo) {
+                debugLog('ERROR: systemInfo element not found, creating fallback');
+                setTimeout(createFallbackSystemInfo, 100);
+                return;
             }
 
-            // Update memory usage if available
-            if (performance.memory) {
-                const heapRows = document.querySelectorAll('.info-row');
-                heapRows.forEach(row => {
-                    const label = row.querySelector('.info-label').textContent;
+            try {
+                const now = new Date();
+                const loadTime = performance.now();
+                
+                debugLog('Getting browser info');
+                
+                // Safely get browser information with fallbacks
+                const browserInfo = {
+                    userAgent: (navigator && navigator.userAgent) ? navigator.userAgent : 'Unknown',
+                    platform: (navigator && navigator.platform) ? navigator.platform : 'Unknown',
+                    language: (navigator && navigator.language) ? navigator.language : 'en',
+                    cookieEnabled: (navigator && typeof navigator.cookieEnabled !== 'undefined') ? navigator.cookieEnabled : true,
+                    onLine: (navigator && typeof navigator.onLine !== 'undefined') ? navigator.onLine : true,
+                    hardwareConcurrency: (navigator && navigator.hardwareConcurrency) ? navigator.hardwareConcurrency : 'Unknown',
+                    maxTouchPoints: (navigator && navigator.maxTouchPoints) ? navigator.maxTouchPoints : 0,
+                    deviceMemory: (navigator && navigator.deviceMemory) ? navigator.deviceMemory : 'Unknown'
+                };
+
+                debugLog('Getting screen info');
+                
+                // Safely get screen information
+                const screenInfo = {
+                    width: (screen && screen.width) ? screen.width : 'Unknown',
+                    height: (screen && screen.height) ? screen.height : 'Unknown',
+                    availWidth: (screen && screen.availWidth) ? screen.availWidth : 'Unknown',
+                    availHeight: (screen && screen.availHeight) ? screen.availHeight : 'Unknown',
+                    colorDepth: (screen && screen.colorDepth) ? screen.colorDepth : 'Unknown',
+                    pixelDepth: (screen && screen.pixelDepth) ? screen.pixelDepth : 'Unknown'
+                };
+
+                // Safely get window information
+                const windowInfo = {
+                    innerWidth: (window && window.innerWidth) ? window.innerWidth : 'Unknown',
+                    innerHeight: (window && window.innerHeight) ? window.innerHeight : 'Unknown',
+                    devicePixelRatio: (window && window.devicePixelRatio) ? window.devicePixelRatio : 1
+                };
+
+                debugLog('Getting additional info');
+
+                // Get connection information (if available)
+                const connection = (navigator && (navigator.connection || navigator.mozConnection || navigator.webkitConnection)) ? 
+                    (navigator.connection || navigator.mozConnection || navigator.webkitConnection) : null;
+                
+                // Get geolocation info (just timezone)
+                let timezone = 'Unknown';
+                try {
+                    timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                } catch (e) {
+                    debugLog('Timezone detection failed', e);
+                }
+
+                // Detect browser
+                function getBrowser() {
+                    try {
+                        const ua = browserInfo.userAgent.toLowerCase();
+                        if (ua.includes('firefox')) return 'Firefox';
+                        if (ua.includes('chrome') && !ua.includes('edge')) return 'Chrome';
+                        if (ua.includes('safari') && !ua.includes('chrome')) return 'Safari';
+                        if (ua.includes('edge')) return 'Edge';
+                        if (ua.includes('opera') || ua.includes('opr')) return 'Opera';
+                        return 'Unknown';
+                    } catch (e) {
+                        debugLog('Browser detection failed', e);
+                        return 'Unknown';
+                    }
+                }
+
+                // Detect OS
+                function getOS() {
+                    try {
+                        const ua = browserInfo.userAgent;
+                        if (ua.includes('Windows')) return 'Windows';
+                        if (ua.includes('Mac')) return 'macOS';
+                        if (ua.includes('Linux')) return 'Linux';
+                        if (ua.includes('Android')) return 'Android';
+                        if (ua.includes('iOS') || ua.includes('iPhone') || ua.includes('iPad')) return 'iOS';
+                        return 'Unknown';
+                    } catch (e) {
+                        debugLog('OS detection failed', e);
+                        return 'Unknown';
+                    }
+                }
+
+                debugLog('Creating info data array');
+
+                // Create info rows with real data
+                const infoData = [
+                    { label: 'Status Code', value: 'HTTP 404' },
+                    { label: 'Request Method', value: 'GET' },
+                    { label: 'Current Time', value: now.toLocaleString() },
+                    { label: 'Page Load Time', value: `${loadTime.toFixed(2)}ms` },
+                    { label: 'Browser', value: getBrowser() },
+                    { label: 'Operating System', value: getOS() },
+                    { label: 'Language', value: browserInfo.language },
+                    { label: 'Timezone', value: timezone },
+                    { label: 'Screen Resolution', value: `${screenInfo.width}x${screenInfo.height}` },
+                    { label: 'Viewport Size', value: `${windowInfo.innerWidth}x${windowInfo.innerHeight}` },
+                    { label: 'Pixel Ratio', value: windowInfo.devicePixelRatio },
+                    { label: 'Color Depth', value: screenInfo.colorDepth !== 'Unknown' ? `${screenInfo.colorDepth}-bit` : 'Unknown' },
+                    { label: 'CPU Cores', value: browserInfo.hardwareConcurrency },
+                    { label: 'Touch Support', value: browserInfo.maxTouchPoints > 0 ? 'Yes' : 'No' },
+                    { label: 'Cookies Enabled', value: browserInfo.cookieEnabled ? 'Yes' : 'No' },
+                    { label: 'Online Status', value: browserInfo.onLine ? 'Online' : 'Offline' }
+                ];
+
+                // Add connection info if available
+                if (connection) {
+                    debugLog('Adding connection info');
+                    infoData.push(
+                        { label: 'Connection Type', value: connection.effectiveType || 'Unknown' },
+                        { label: 'Downlink Speed', value: connection.downlink ? `${connection.downlink} Mbps` : 'Unknown' }
+                    );
+                }
+
+                // Add performance info if available
+                if (performance && performance.memory) {
+                    debugLog('Adding memory info');
+                    infoData.push(
+                        { label: 'JS Heap Used', value: `${(performance.memory.usedJSHeapSize / 1048576).toFixed(2)}MB` },
+                        { label: 'JS Heap Total', value: `${(performance.memory.totalJSHeapSize / 1048576).toFixed(2)}MB` }
+                    );
+                }
+
+                debugLog('Generating HTML for system info');
+
+                // Generate HTML
+                systemInfo.innerHTML = infoData.map(item => `
+                    <div class="info-row">
+                        <span class="info-label">${item.label}:</span>
+                        <span class="info-value">${item.value}</span>
+                    </div>
+                `).join('');
+
+                debugLog('System info created successfully');
+
+                // Update every 10 seconds for dynamic data
+                setTimeout(() => {
+                    updateDynamicInfo();
+                }, 10000);
+
+            } catch (error) {
+                debugLog('ERROR in getSystemInfo:', error);
+                // Fallback to basic info if there's an error
+                createFallbackSystemInfo();
+            }
+        }
+
+        // Update dynamic information with error handling
+        function updateDynamicInfo() {
+            try {
+                debugLog('Updating dynamic info');
+                const now = new Date();
+                
+                // Safely update time
+                const timeElements = document.querySelectorAll('.info-row');
+                timeElements.forEach(row => {
+                    const label = row.querySelector('.info-label');
                     const value = row.querySelector('.info-value');
-                    
-                    if (label === 'JS Heap Used:') {
-                        value.textContent = `${(performance.memory.usedJSHeapSize / 1048576).toFixed(2)}MB`;
-                    } else if (label === 'JS Heap Total:') {
-                        value.textContent = `${(performance.memory.totalJSHeapSize / 1048576).toFixed(2)}MB`;
+                    if (label && label.textContent === 'Current Time:' && value) {
+                        value.textContent = now.toLocaleString();
+                    }
+                    if (label && label.textContent === 'Online Status:' && value) {
+                        value.textContent = (navigator && navigator.onLine) ? 'Online' : 'Offline';
                     }
                 });
-            }
 
-            // Continue updating every 5 seconds
-            setTimeout(updateDynamicInfo, 5000);
+                // Update memory usage if available
+                if (performance && performance.memory) {
+                    const heapRows = document.querySelectorAll('.info-row');
+                    heapRows.forEach(row => {
+                        const label = row.querySelector('.info-label');
+                        const value = row.querySelector('.info-value');
+                        
+                        if (label && value) {
+                            if (label.textContent === 'JS Heap Used:') {
+                                value.textContent = `${(performance.memory.usedJSHeapSize / 1048576).toFixed(2)}MB`;
+                            } else if (label.textContent === 'JS Heap Total:') {
+                                value.textContent = `${(performance.memory.totalJSHeapSize / 1048576).toFixed(2)}MB`;
+                            }
+                        }
+                    });
+                }
+
+                // Continue updating every 10 seconds
+                setTimeout(updateDynamicInfo, 10000);
+                
+            } catch (error) {
+                debugLog('ERROR in updateDynamicInfo:', error);
+            }
         }
 
         // Initialize everything when page loads
