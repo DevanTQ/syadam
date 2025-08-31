@@ -458,7 +458,10 @@
         <div class="tech-stack">
             <div class="stack-title">System Information</div>
             <div class="stack-info" id="systemInfo">
-                <!-- Will be populated by JavaScript with real data -->
+                <div class="info-row">
+                    <span class="info-label">Status:</span>
+                    <span class="info-value">Loading...</span>
+                </div>
             </div>
         </div>
     </div>
@@ -794,11 +797,62 @@
 
         // Initialize everything when page loads
         window.addEventListener('load', () => {
-            createParticles();
-            initParallax();
-            initInteractivity();
-            getSystemInfo(); // Load real system information
+            debugLog('Page loaded, initializing components');
+            
+            try {
+                createParticles();
+                debugLog('Particles created');
+            } catch (e) {
+                debugLog('ERROR creating particles:', e);
+            }
+            
+            try {
+                initParallax();
+                debugLog('Parallax initialized');
+            } catch (e) {
+                debugLog('ERROR initializing parallax:', e);
+            }
+            
+            try {
+                initInteractivity();
+                debugLog('Interactivity initialized');
+            } catch (e) {
+                debugLog('ERROR initializing interactivity:', e);
+            }
+            
+            try {
+                getSystemInfo();
+                debugLog('System info initialized');
+            } catch (e) {
+                debugLog('ERROR getting system info:', e);
+                // Final fallback
+                setTimeout(createFallbackSystemInfo, 500);
+            }
         });
+
+        // Backup initialization for GitHub Pages
+        document.addEventListener('DOMContentLoaded', () => {
+            debugLog('DOM Content Loaded - backup initialization');
+            
+            // Wait a bit and check if system info was created
+            setTimeout(() => {
+                const systemInfo = document.getElementById('systemInfo');
+                if (systemInfo && systemInfo.innerHTML.trim() === '') {
+                    debugLog('System info empty, creating fallback');
+                    createFallbackSystemInfo();
+                }
+            }, 2000);
+        });
+
+        // Additional backup for slower connections
+        setTimeout(() => {
+            debugLog('Timeout backup check');
+            const systemInfo = document.getElementById('systemInfo');
+            if (systemInfo && systemInfo.innerHTML.trim() === '') {
+                debugLog('System info still empty after timeout, creating fallback');
+                createFallbackSystemInfo();
+            }
+        }, 5000);
 
         // Handle resize events
         window.addEventListener('resize', handleResize);
