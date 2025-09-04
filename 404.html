@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,8 +44,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
         }
 
         /* Grid pattern overlay */
@@ -54,7 +62,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(0, 255, 136, 0.1) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 255, 136, 0.1) 1px, transparent 1px);
             background-size: 50px 50px;
@@ -85,15 +93,19 @@
             0% {
                 text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
             }
+
             25% {
                 text-shadow: 2px 0 rgba(255, 0, 0, 0.7), -2px 0 rgba(0, 255, 255, 0.7);
             }
+
             50% {
                 text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
             }
+
             75% {
                 text-shadow: -2px 0 rgba(255, 0, 0, 0.7), 2px 0 rgba(0, 255, 255, 0.7);
             }
+
             100% {
                 text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
             }
@@ -132,9 +144,17 @@
             flex-shrink: 0;
         }
 
-        .close { background: #ff5f56; }
-        .minimize { background: #ffbd2e; }
-        .maximize { background: #27ca3f; }
+        .close {
+            background: #ff5f56;
+        }
+
+        .minimize {
+            background: #ffbd2e;
+        }
+
+        .maximize {
+            background: #27ca3f;
+        }
 
         .terminal-title {
             margin-left: auto;
@@ -213,8 +233,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
         }
 
         .status-text {
@@ -276,23 +303,23 @@
             .grid-overlay {
                 background-size: 30px 30px;
             }
-            
+
             .status-indicators {
                 flex-direction: column;
                 align-items: center;
                 gap: 8px;
             }
-            
+
             .status-item {
                 justify-content: center;
                 min-width: 200px;
             }
-            
+
             .code-block {
                 font-size: 11px;
                 padding: 10px;
             }
-            
+
             .terminal-window {
                 margin: 10px 0;
             }
@@ -302,7 +329,7 @@
             .grid-overlay {
                 background-size: 40px 40px;
             }
-            
+
             .stack-info {
                 grid-template-columns: 1fr;
             }
@@ -324,23 +351,24 @@
             .container {
                 padding: 10px;
             }
-            
+
             .error-code {
                 font-size: clamp(60px, 15vw, 120px);
                 margin-bottom: 10px;
             }
-            
+
             .terminal-window {
                 margin: 10px 0;
                 padding: 15px;
             }
-            
+
             .tech-stack {
                 margin-top: 20px;
             }
         }
 
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        @media (-webkit-min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi) {
             .particle {
                 width: 1px;
                 height: 1px;
@@ -355,13 +383,25 @@
         }
 
         @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
         }
 
         @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: #00ff88 }
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: #00ff88
+            }
         }
 
         .status-item:hover {
@@ -376,7 +416,11 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .particle, .error-code, .status-dot, .typing-text {
+
+            .particle,
+            .error-code,
+            .status-dot,
+            .typing-text {
                 animation: none;
             }
         }
@@ -386,11 +430,12 @@
                 background: white;
                 color: black;
             }
-            
-            .particles, .grid-overlay {
+
+            .particles,
+            .grid-overlay {
                 display: none;
             }
-            
+
             .terminal-window {
                 background: white;
                 border: 2px solid black;
@@ -398,13 +443,14 @@
         }
     </style>
 </head>
+
 <body>
     <div class="particles" id="particles"></div>
     <div class="grid-overlay"></div>
-    
+
     <div class="container">
         <div class="error-code">404</div>
-        
+
         <div class="terminal-window">
             <div class="terminal-header">
                 <div class="terminal-buttons">
@@ -414,21 +460,22 @@
                 </div>
                 <div class="terminal-title">error.sh</div>
             </div>
-            
+
             <div class="error-message">ERROR: Resource Not Found</div>
-            
+
             <div class="code-block">
-                <div><span class="prompt">$</span> <span class="command">curl -I https://LinkNest.com/requested-page</span></div>
+                <div><span class="prompt">$</span> <span class="command">curl -I
+                        https://LinkNest.com/requested-page</span></div>
                 <div>HTTP/1.1 404 Not Found</div>
                 <div>Server: nginx/1.18.0</div>
                 <div>Content-Type: text/html</div>
             </div>
-            
+
             <div class="description">
                 The requested resource could not be located on this server.
             </div>
         </div>
-        
+
         <div class="status-indicators">
             <div class="status-item">
                 <div class="status-dot"></div>
@@ -443,7 +490,7 @@
                 <span class="status-text">Path Not Found</span>
             </div>
         </div>
-        
+
         <div class="tech-stack">
             <div class="stack-title">System Information</div>
             <div class="stack-info" id="systemInfo">
@@ -461,7 +508,7 @@
             const particlesContainer = document.getElementById('particles');
             const screenWidth = window.innerWidth;
             let numberOfParticles;
-            
+
             if (screenWidth < 480) {
                 numberOfParticles = 20;
             } else if (screenWidth < 768) {
@@ -469,9 +516,9 @@
             } else {
                 numberOfParticles = 50;
             }
-            
+
             particlesContainer.innerHTML = '';
-            
+
             for (let i = 0; i < numberOfParticles; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
@@ -489,7 +536,7 @@
                     const particles = document.querySelectorAll('.particle');
                     const x = e.clientX / window.innerWidth;
                     const y = e.clientY / window.innerHeight;
-                    
+
                     particles.forEach((particle, index) => {
                         const speed = (index % 5 + 1) * 0.5;
                         particle.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
@@ -501,7 +548,7 @@
         function handleResize() {
             const currentWidth = window.innerWidth;
             const breakpoints = [480, 768, 1024];
-            
+
             breakpoints.forEach(bp => {
                 if (Math.abs(currentWidth - bp) < 50) {
                     setTimeout(createParticles, 100);
@@ -511,25 +558,25 @@
 
         function initInteractivity() {
             document.querySelectorAll('.status-item').forEach(item => {
-                item.addEventListener('mouseenter', function() {
+                item.addEventListener('mouseenter', function () {
                     if (window.innerWidth > 768) {
                         this.style.transform = 'translateY(-2px)';
                         this.style.boxShadow = '0 4px 15px rgba(0, 255, 136, 0.2)';
                     }
                 });
-                
-                item.addEventListener('mouseleave', function() {
+
+                item.addEventListener('mouseleave', function () {
                     this.style.transform = 'translateY(0)';
                     this.style.boxShadow = 'none';
                 });
             });
 
             document.querySelectorAll('.status-item').forEach(item => {
-                item.addEventListener('touchstart', function() {
+                item.addEventListener('touchstart', function () {
                     this.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
                 });
-                
-                item.addEventListener('touchend', function() {
+
+                item.addEventListener('touchend', function () {
                     setTimeout(() => {
                         this.style.backgroundColor = 'rgba(0, 0, 0, 0.4)';
                     }, 150);
@@ -538,7 +585,7 @@
         }
 
         const DEBUG = true;
-        
+
         // Console log for debugging
         function debugLog(message, data = null) {
             if (DEBUG) {
@@ -549,7 +596,7 @@
         function createFallbackSystemInfo() {
             debugLog('Creating fallback system info');
             const systemInfo = document.getElementById('systemInfo');
-            
+
             if (!systemInfo) {
                 debugLog('ERROR: systemInfo element not found');
                 return;
@@ -574,7 +621,7 @@
 
         function getSystemInfo() {
             debugLog('Starting getSystemInfo function');
-            
+
             const systemInfo = document.getElementById('systemInfo');
             if (!systemInfo) {
                 debugLog('ERROR: systemInfo element not found, creating fallback');
@@ -585,9 +632,9 @@
             try {
                 const now = new Date();
                 const loadTime = performance.now();
-                
+
                 debugLog('Getting browser info');
-                
+
                 const browserInfo = {
                     userAgent: (navigator && navigator.userAgent) ? navigator.userAgent : 'Unknown',
                     platform: (navigator && navigator.platform) ? navigator.platform : 'Unknown',
@@ -600,7 +647,7 @@
                 };
 
                 debugLog('Getting screen info');
-                
+
                 const screenInfo = {
                     width: (screen && screen.width) ? screen.width : 'Unknown',
                     height: (screen && screen.height) ? screen.height : 'Unknown',
@@ -618,9 +665,9 @@
 
                 debugLog('Getting additional info');
 
-                const connection = (navigator && (navigator.connection || navigator.mozConnection || navigator.webkitConnection)) ? 
+                const connection = (navigator && (navigator.connection || navigator.mozConnection || navigator.webkitConnection)) ?
                     (navigator.connection || navigator.mozConnection || navigator.webkitConnection) : null;
-                
+
                 let timezone = 'Unknown';
                 try {
                     timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -723,7 +770,7 @@
             try {
                 debugLog('Updating dynamic info');
                 const now = new Date();
-                
+
                 // Safely update time
                 const timeElements = document.querySelectorAll('.info-row');
                 timeElements.forEach(row => {
@@ -742,7 +789,7 @@
                     heapRows.forEach(row => {
                         const label = row.querySelector('.info-label');
                         const value = row.querySelector('.info-value');
-                        
+
                         if (label && value) {
                             if (label.textContent === 'JS Heap Used:') {
                                 value.textContent = `${(performance.memory.usedJSHeapSize / 1048576).toFixed(2)}MB`;
@@ -754,7 +801,7 @@
                 }
 
                 setTimeout(updateDynamicInfo, 10000);
-                
+
             } catch (error) {
                 debugLog('ERROR in updateDynamicInfo:', error);
             }
@@ -762,28 +809,28 @@
 
         window.addEventListener('load', () => {
             debugLog('Page loaded, initializing components');
-            
+
             try {
                 createParticles();
                 debugLog('Particles created');
             } catch (e) {
                 debugLog('ERROR creating particles:', e);
             }
-            
+
             try {
                 initParallax();
                 debugLog('Parallax initialized');
             } catch (e) {
                 debugLog('ERROR initializing parallax:', e);
             }
-            
+
             try {
                 initInteractivity();
                 debugLog('Interactivity initialized');
             } catch (e) {
                 debugLog('ERROR initializing interactivity:', e);
             }
-            
+
             try {
                 getSystemInfo();
                 debugLog('System info initialized');
@@ -796,7 +843,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             debugLog('DOM Content Loaded - backup initialization');
-            
+
             // Wait a bit and check if system info was created
             setTimeout(() => {
                 const systemInfo = document.getElementById('systemInfo');
@@ -829,4 +876,5 @@
         }
     </script>
 </body>
+
 </html>

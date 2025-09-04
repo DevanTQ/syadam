@@ -148,15 +148,15 @@ floatStyle.textContent = `
             }
         `;
 document.head.appendChild(floatStyle);
-fetch("404.html")
-    .then(response => {
-        if (!response.ok) throw new Error("404 file not found");
-        return response.text();
-    })
-    .then(html => {
-        document.documentElement.innerHTML = html; // ganti seluruh halaman
-    })
-    .catch(error => {
-        console.error(error);
-        document.body.innerHTML = "<h1>404 - Page Not Found</h1>";
-    });
+// fetch("404.html")
+//     .then(response => {
+//         if (!response.ok) throw new Error("404 file not found");
+//         return response.text();
+//     })
+//     .then(html => {
+//         document.documentElement.innerHTML = html; // ganti seluruh halaman
+//     })
+//     .catch(error => {
+//         console.error(error);
+//         document.body.innerHTML = "<h1>404 - Page Not Found</h1>";
+//     });
