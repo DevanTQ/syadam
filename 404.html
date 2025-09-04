@@ -22,7 +22,6 @@
             position: relative;
         }
 
-        /* Animated background particles */
         .particles {
             position: fixed;
             top: 0;
@@ -273,7 +272,6 @@
             word-break: break-all;
         }
 
-        /* Mobile phones (up to 480px) */
         @media (max-width: 480px) {
             .grid-overlay {
                 background-size: 30px 30px;
@@ -300,7 +298,6 @@
             }
         }
 
-        /* Small tablets (481px to 768px) */
         @media (min-width: 481px) and (max-width: 768px) {
             .grid-overlay {
                 background-size: 40px 40px;
@@ -311,21 +308,18 @@
             }
         }
 
-        /* Large tablets (769px to 1024px) */
         @media (min-width: 769px) and (max-width: 1024px) {
             .stack-info {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        /* Desktop and larger (1025px and up) */
         @media (min-width: 1025px) {
             .stack-info {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
 
-        /* Landscape phone orientation */
         @media (max-height: 500px) and (orientation: landscape) {
             .container {
                 padding: 10px;
@@ -346,7 +340,6 @@
             }
         }
 
-        /* High resolution displays */
         @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
             .particle {
                 width: 1px;
@@ -354,7 +347,6 @@
             }
         }
 
-        /* Typing animation */
         .typing-text {
             overflow: hidden;
             border-right: 2px solid #00ff88;
@@ -372,7 +364,6 @@
             50% { border-color: #00ff88 }
         }
 
-        /* Hover effects for interactive elements */
         .status-item:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
@@ -384,14 +375,12 @@
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
         }
 
-        /* Accessibility improvements */
         @media (prefers-reduced-motion: reduce) {
             .particle, .error-code, .status-dot, .typing-text {
                 animation: none;
             }
         }
 
-        /* Print styles */
         @media print {
             body {
                 background: white;
@@ -467,22 +456,20 @@
     </div>
 
     <script>
-        // Generate floating particles with device-appropriate count
+        window.location.href = "index.html";
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             const screenWidth = window.innerWidth;
             let numberOfParticles;
             
-            // Adjust particle count based on screen size for performance
             if (screenWidth < 480) {
-                numberOfParticles = 20; // Mobile phones
+                numberOfParticles = 20;
             } else if (screenWidth < 768) {
-                numberOfParticles = 30; // Tablets
+                numberOfParticles = 30;
             } else {
-                numberOfParticles = 50; // Desktop
+                numberOfParticles = 50;
             }
             
-            // Clear existing particles
             particlesContainer.innerHTML = '';
             
             for (let i = 0; i < numberOfParticles; i++) {
@@ -496,7 +483,6 @@
             }
         }
 
-        // Mouse parallax effect (disabled on mobile for performance)
         function initParallax() {
             if (window.innerWidth > 768) {
                 document.addEventListener('mousemove', (e) => {
@@ -512,13 +498,10 @@
             }
         }
 
-        // Handle window resize
         function handleResize() {
-            // Recreate particles on significant size changes
             const currentWidth = window.innerWidth;
             const breakpoints = [480, 768, 1024];
             
-            // Check if we crossed a major breakpoint
             breakpoints.forEach(bp => {
                 if (Math.abs(currentWidth - bp) < 50) {
                     setTimeout(createParticles, 100);
@@ -526,7 +509,6 @@
             });
         }
 
-        // Add hover effects to interactive elements
         function initInteractivity() {
             document.querySelectorAll('.status-item').forEach(item => {
                 item.addEventListener('mouseenter', function() {
@@ -542,7 +524,6 @@
                 });
             });
 
-            // Add touch feedback for mobile
             document.querySelectorAll('.status-item').forEach(item => {
                 item.addEventListener('touchstart', function() {
                     this.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
@@ -556,7 +537,6 @@
             });
         }
 
-        // Debug mode for GitHub Pages
         const DEBUG = true;
         
         // Console log for debugging
@@ -566,7 +546,6 @@
             }
         }
 
-        // Fallback system info for GitHub Pages compatibility
         function createFallbackSystemInfo() {
             debugLog('Creating fallback system info');
             const systemInfo = document.getElementById('systemInfo');
@@ -593,7 +572,6 @@
             `).join('');
         }
 
-        // Get real system information with error handling
         function getSystemInfo() {
             debugLog('Starting getSystemInfo function');
             
@@ -610,7 +588,6 @@
                 
                 debugLog('Getting browser info');
                 
-                // Safely get browser information with fallbacks
                 const browserInfo = {
                     userAgent: (navigator && navigator.userAgent) ? navigator.userAgent : 'Unknown',
                     platform: (navigator && navigator.platform) ? navigator.platform : 'Unknown',
@@ -624,7 +601,6 @@
 
                 debugLog('Getting screen info');
                 
-                // Safely get screen information
                 const screenInfo = {
                     width: (screen && screen.width) ? screen.width : 'Unknown',
                     height: (screen && screen.height) ? screen.height : 'Unknown',
@@ -634,7 +610,6 @@
                     pixelDepth: (screen && screen.pixelDepth) ? screen.pixelDepth : 'Unknown'
                 };
 
-                // Safely get window information
                 const windowInfo = {
                     innerWidth: (window && window.innerWidth) ? window.innerWidth : 'Unknown',
                     innerHeight: (window && window.innerHeight) ? window.innerHeight : 'Unknown',
@@ -643,11 +618,9 @@
 
                 debugLog('Getting additional info');
 
-                // Get connection information (if available)
                 const connection = (navigator && (navigator.connection || navigator.mozConnection || navigator.webkitConnection)) ? 
                     (navigator.connection || navigator.mozConnection || navigator.webkitConnection) : null;
                 
-                // Get geolocation info (just timezone)
                 let timezone = 'Unknown';
                 try {
                     timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -689,7 +662,6 @@
 
                 debugLog('Creating info data array');
 
-                // Create info rows with real data
                 const infoData = [
                     { label: 'Status Code', value: 'HTTP 404' },
                     { label: 'Request Method', value: 'GET' },
@@ -709,7 +681,6 @@
                     { label: 'Online Status', value: browserInfo.onLine ? 'Online' : 'Offline' }
                 ];
 
-                // Add connection info if available
                 if (connection) {
                     debugLog('Adding connection info');
                     infoData.push(
@@ -718,7 +689,6 @@
                     );
                 }
 
-                // Add performance info if available
                 if (performance && performance.memory) {
                     debugLog('Adding memory info');
                     infoData.push(
@@ -739,19 +709,16 @@
 
                 debugLog('System info created successfully');
 
-                // Update every 10 seconds for dynamic data
                 setTimeout(() => {
                     updateDynamicInfo();
                 }, 10000);
 
             } catch (error) {
                 debugLog('ERROR in getSystemInfo:', error);
-                // Fallback to basic info if there's an error
                 createFallbackSystemInfo();
             }
         }
 
-        // Update dynamic information with error handling
         function updateDynamicInfo() {
             try {
                 debugLog('Updating dynamic info');
@@ -770,7 +737,6 @@
                     }
                 });
 
-                // Update memory usage if available
                 if (performance && performance.memory) {
                     const heapRows = document.querySelectorAll('.info-row');
                     heapRows.forEach(row => {
@@ -787,7 +753,6 @@
                     });
                 }
 
-                // Continue updating every 10 seconds
                 setTimeout(updateDynamicInfo, 10000);
                 
             } catch (error) {
@@ -795,7 +760,6 @@
             }
         }
 
-        // Initialize everything when page loads
         window.addEventListener('load', () => {
             debugLog('Page loaded, initializing components');
             
@@ -830,7 +794,6 @@
             }
         });
 
-        // Backup initialization for GitHub Pages
         document.addEventListener('DOMContentLoaded', () => {
             debugLog('DOM Content Loaded - backup initialization');
             
@@ -844,7 +807,6 @@
             }, 2000);
         });
 
-        // Additional backup for slower connections
         setTimeout(() => {
             debugLog('Timeout backup check');
             const systemInfo = document.getElementById('systemInfo');
@@ -854,17 +816,14 @@
             }
         }, 5000);
 
-        // Handle resize events
         window.addEventListener('resize', handleResize);
 
-        // Handle orientation change on mobile
         window.addEventListener('orientationchange', () => {
             setTimeout(() => {
                 createParticles();
             }, 100);
         });
 
-        // Performance optimization: reduce particles on low-end devices
         if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
             document.documentElement.style.setProperty('--particle-count', '15');
         }
